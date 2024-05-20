@@ -362,6 +362,15 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
+
+export interface ApiCC extends Schema.CollectionType {
+  collectionName: 'cs';
+  info: {
+    singularName: 'c';
+    pluralName: 'cs';
+    displayName: 'customer';
+    description: '';
+
 export interface ApiOrderOrder extends Schema.CollectionType {
   collectionName: 'orders';
   info: {
@@ -376,11 +385,26 @@ export interface ApiProductProduct extends Schema.CollectionType {
     pluralName: 'products';
     displayName: 'Product';
 
+
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
+
+    CustomerID: Attribute.Integer & Attribute.Required;
+    Name: Attribute.String & Attribute.Required;
+    Type: Attribute.String & Attribute.Required;
+    Phone: Attribute.BigInteger & Attribute.Required;
+    Email: Attribute.Email & Attribute.Required;
+    Telegram: Attribute.BigInteger & Attribute.Required;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::c.c', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::c.c', 'oneToOne', 'admin::user'> &
+
 
     OrderID: Attribute.Integer & Attribute.Required;
     UserID: Attribute.Integer & Attribute.Required;
@@ -420,6 +444,7 @@ export interface ApiProductProduct extends Schema.CollectionType {
       'oneToOne',
       'admin::user'
     > &
+
       Attribute.Private;
   };
 }
@@ -860,9 +885,13 @@ declare module '@strapi/types' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
+
+      'api::c.c': ApiCC;
+
       'api::order.order': ApiOrderOrder;
 
       'api::product.product': ApiProductProduct;
+
 
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
