@@ -362,6 +362,7 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
+
 export interface ApiCC extends Schema.CollectionType {
   collectionName: 'cs';
   info: {
@@ -369,11 +370,28 @@ export interface ApiCC extends Schema.CollectionType {
     pluralName: 'cs';
     displayName: 'customer';
     description: '';
+
+export interface ApiOrderOrder extends Schema.CollectionType {
+  collectionName: 'orders';
+  info: {
+    singularName: 'order';
+    pluralName: 'orders';
+    displayName: 'Order';
+
+export interface ApiProductProduct extends Schema.CollectionType {
+  collectionName: 'products';
+  info: {
+    singularName: 'product';
+    pluralName: 'products';
+    displayName: 'Product';
+
+
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
+
     CustomerID: Attribute.Integer & Attribute.Required;
     Name: Attribute.String & Attribute.Required;
     Type: Attribute.String & Attribute.Required;
@@ -386,6 +404,47 @@ export interface ApiCC extends Schema.CollectionType {
     createdBy: Attribute.Relation<'api::c.c', 'oneToOne', 'admin::user'> &
       Attribute.Private;
     updatedBy: Attribute.Relation<'api::c.c', 'oneToOne', 'admin::user'> &
+
+
+    OrderID: Attribute.Integer & Attribute.Required;
+    UserID: Attribute.Integer & Attribute.Required;
+    ProductID: Attribute.Integer & Attribute.Required;
+    Quantity: Attribute.Integer & Attribute.Required;
+    TotalPrice: Attribute.Decimal & Attribute.Required;
+
+    ProductID: Attribute.Integer & Attribute.Required;
+    ProductName: Attribute.String & Attribute.Required;
+    ProductPrice: Attribute.Decimal & Attribute.Required;
+    ProductCategoryID: Attribute.Integer & Attribute.Required;
+    ProductQuantity: Attribute.Integer & Attribute.Required;
+    ProductOrganic: Attribute.Boolean & Attribute.Required;
+    OriginProvince: Attribute.String & Attribute.Required;
+    ProductOwnerID: Attribute.Integer & Attribute.Required;
+    images: Attribute.Media & Attribute.Required;
+
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+
+      'api::order.order',
+
+      'api::product.product',
+
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+
+      'api::order.order',
+
+      'api::product.product',
+
+      'oneToOne',
+      'admin::user'
+    > &
+
       Attribute.Private;
   };
 }
@@ -826,7 +885,14 @@ declare module '@strapi/types' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
+
       'api::c.c': ApiCC;
+
+      'api::order.order': ApiOrderOrder;
+
+      'api::product.product': ApiProductProduct;
+
+
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::content-releases.release': PluginContentReleasesRelease;
