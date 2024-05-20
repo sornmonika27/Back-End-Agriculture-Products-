@@ -368,27 +368,55 @@ export interface ApiOrderOrder extends Schema.CollectionType {
     singularName: 'order';
     pluralName: 'orders';
     displayName: 'Order';
+
+export interface ApiProductProduct extends Schema.CollectionType {
+  collectionName: 'products';
+  info: {
+    singularName: 'product';
+    pluralName: 'products';
+    displayName: 'Product';
+
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
+
     OrderID: Attribute.Integer & Attribute.Required;
     UserID: Attribute.Integer & Attribute.Required;
     ProductID: Attribute.Integer & Attribute.Required;
     Quantity: Attribute.Integer & Attribute.Required;
     TotalPrice: Attribute.Decimal & Attribute.Required;
+
+    ProductID: Attribute.Integer & Attribute.Required;
+    ProductName: Attribute.String & Attribute.Required;
+    ProductPrice: Attribute.Decimal & Attribute.Required;
+    ProductCategoryID: Attribute.Integer & Attribute.Required;
+    ProductQuantity: Attribute.Integer & Attribute.Required;
+    ProductOrganic: Attribute.Boolean & Attribute.Required;
+    OriginProvince: Attribute.String & Attribute.Required;
+    ProductOwnerID: Attribute.Integer & Attribute.Required;
+    images: Attribute.Media & Attribute.Required;
+
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
+
       'api::order.order',
+
+      'api::product.product',
+
       'oneToOne',
       'admin::user'
     > &
       Attribute.Private;
     updatedBy: Attribute.Relation<
+
       'api::order.order',
+
+      'api::product.product',
+
       'oneToOne',
       'admin::user'
     > &
@@ -833,6 +861,9 @@ declare module '@strapi/types' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'api::order.order': ApiOrderOrder;
+
+      'api::product.product': ApiProductProduct;
+
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::content-releases.release': PluginContentReleasesRelease;
